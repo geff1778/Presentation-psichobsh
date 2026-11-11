@@ -556,20 +556,21 @@ def s10(prs):
          first=True)
     srcs = [
         "Леонтьев Д. А. Адлер Альфред // БРЭ. URL: "
-        "old.bigenc.ru/psychology/text/v/1800877",
+        "bigenc.ru/psychology/text/1800877",
         "Леонтьев Д. А. Индивидуальная психология // БРЭ. URL: "
-        "old.bigenc.ru/psychology/text/v/2008679",
+        "bigenc.ru/psychology/text/2008679",
         "Мавлявиева Л. И. Личностно-социальная концепция воспитания "
-        "А. Адлера : дис. … канд. пед. наук. URL: dslib.net/obw-pedagogika/"
-        "lichnostno-socialnaja-koncepcija-vospitanija-alfreda-adlera.html",
+        "А. Адлера : дис. … канд. пед. наук. URL: dissercat.com/content/"
+        "lichnostno-sotsialnaya-kontseptsiya-vospitaniya-alfreda-adlera",
         "Юнг (Jung) Карл Густав // Психологический словарь. URL: "
         "rus-big-psyho.slovaronline.com/3359-Юнг",
         "Хьелл Л., Зиглер Д. Теории личности (фрагмент). URL: "
         "gbs.spb.ru/ru/search/detail/?id=61e0492f12935ed6424cf239c090baf3",
         "Модель К. Юнга и современные стили обучения // КиберЛенинка. URL: "
         "cyberleninka.ru/article/n/model-k-yunga-i-sovremennye-stili-obucheniya",
-        "Архетипическая педагогика (обзор) // Alphapedia. URL: "
-        "alphapedia.ru/w/Archetypal_pedagogy",
+        "Доценко Т. Э. Архетипические смыслы антропологообразовательных "
+        "традиций // КиберЛенинка. URL: cyberleninka.ru/article/n/"
+        "arhetipicheskie-smysly-antropologoobrazovatelnyh-traditsiy",
     ]
     t = tb(s, 735, 228, 465, 360)
     for i, src in enumerate(srcs):
