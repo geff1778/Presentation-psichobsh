@@ -19,8 +19,10 @@
 | `report/report.docx` | Доклад, 15 страниц, Times New Roman 14 pt, полуторный интервал, поля 2 см, абзацный отступ 1,25 см. Структура: титульный лист, введение, три главы, заключение, список источников. |
 | `report/theses.docx` | Тезисы для выступления, 5 страниц. Только маркированные списки, шрифт 15–17 pt, 5–7 пунктов на слайд, каждый блок привязан к номеру слайда. |
 | `presentation/index.html` | Презентация на 10 слайдов (HTML + CSS + JS). Работает офлайн, без CDN и внешних зависимостей. |
+| `presentation/psihologia_shkoly_adler_jung.pptx` | Та же презентация в PowerPoint (16:9, 10 слайдов). Весь текст редактируемый. |
 | `sources.md` | Все источники с URL, датой обращения и пометками о доступности. |
 | `tools/build_docs.py` | Генератор `report.docx` и `theses.docx` (python-docx). |
+| `tools/build_pptx.py` | Генератор `psihologia_shkoly_adler_jung.pptx` (python-pptx). |
 
 ---
 
@@ -49,6 +51,14 @@ python3 -m http.server 12000 --directory presentation
 - `F` — полный экран;
 - клик по правой части экрана — вперёд, по левой — назад;
 - адрес вида `index.html#7` открывает конкретный слайд.
+
+### PowerPoint-версия
+
+Файл `presentation/psihologia_shkoly_adler_jung.pptx` открывается в PowerPoint,
+LibreOffice Impress, Google Slides и Keynote. Формат 16:9 (33,87 × 19,05 см).
+Весь текст — настоящие текстовые блоки, а не картинки: можно править прямо в
+редакторе. Шрифты: Georgia (заголовки, цитаты) и Segoe UI (тело); на Windows и
+macOS они есть, на Linux подставятся близкие аналоги.
 
 ### Печать и PDF
 
@@ -146,3 +156,4 @@ pandoc report.md -o report/report.docx --reference-doc=reference.docx
 - [x] Ссылки на источники в тексте в квадратных скобках: `[1]`, `[2]` и т. д.
 - [x] Тезисы: 5 страниц, маркированные списки, привязка к слайдам.
 - [x] Презентация: 10 слайдов, светлый дизайн, HTML/CSS/JS, работает офлайн.
+- [x] Презентация в PowerPoint (`.pptx`), 16:9, текст редактируемый.
