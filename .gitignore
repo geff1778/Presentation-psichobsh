@@ -1,9 +1,3 @@
-# Временные файлы
-.tmp/
-.cache/
-.skills/
-.cache/
-
 # Python
 __pycache__/
 *.pyc

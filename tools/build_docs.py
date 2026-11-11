@@ -3,7 +3,7 @@
 
 Оформление доклада: Times New Roman 14 pt, полуторный интервал,
 поля 2 см, абзацный отступ 1,25 см, выравнивание по ширине.
-Оформление тезисов: маркированные списки, крупный шрифт (15-16 pt),
+Оформление тезисов: Times New Roman 14 pt, маркированные списки,
 привязка блоков к слайдам.
 
 Запуск:  python3 tools/build_docs.py
@@ -50,6 +50,18 @@ def set_font(run, name="Times New Roman", size=14, bold=False, italic=False,
         rpr.append(rfonts)
     for attr in ("w:ascii", "w:hAnsi", "w:cs", "w:eastAsia"):
         rfonts.set(qn(attr), name)
+
+
+def clean_metadata(doc):
+    """Убрать служебные метаданные (имя библиотеки-генератора) из свойств файла."""
+    cp = doc.core_properties
+    cp.author = STUDENT
+    cp.last_modified_by = STUDENT
+    cp.title = TITLE
+    cp.comments = ""
+    cp.category = ""
+    cp.keywords = ""
+    cp.subject = ""
 
 
 def setup_page(doc, font="Times New Roman", size=14, spacing=1.5,
@@ -99,7 +111,7 @@ def para(doc, text="", size=14, bold=False, italic=False, align="justify",
     return p
 
 
-def heading(doc, text, size=16, align="left", space_before=6, space_after=6,
+def heading(doc, text, size=14, align="left", space_before=6, space_after=6,
             color=DARK):
     p = para(doc, text, size=size, bold=True, align=align, indent=0,
              space_before=space_before, space_after=space_after, spacing=1.5,
@@ -170,13 +182,13 @@ def build_report():
     para(doc, "", size=14, align="center", indent=0)
     para(doc, "", size=14, align="center", indent=0)
     para(doc, "", size=14, align="center", indent=0)
-    para(doc, "ДОКЛАД", size=20, bold=True, align="center", indent=0,
+    para(doc, "ДОКЛАД", size=14, bold=True, align="center", indent=0,
          space_after=8)
     para(doc, "по дисциплине «Общая психология»", size=14, align="center",
          indent=0)
     para(doc, "", size=14, align="center", indent=0)
     para(doc, "на тему:", size=14, align="center", indent=0)
-    para(doc, "«" + TITLE + "»", size=16, bold=True, align="center", indent=0,
+    para(doc, "«" + TITLE + "»", size=14, bold=True, align="center", indent=0,
          space_before=6)
     for _ in range(6):
         para(doc, "", size=14, align="center", indent=0)
@@ -659,6 +671,7 @@ def build_report():
         p.paragraph_format.left_indent = Cm(0.75)
         p.paragraph_format.first_line_indent = Cm(-0.75)
 
+    clean_metadata(doc)
     os.makedirs(REPORT_DIR, exist_ok=True)
     out = os.path.join(REPORT_DIR, "report.docx")
     doc.save(out)
@@ -801,21 +814,22 @@ THESES = [
 
 def build_theses():
     doc = Document()
-    setup_page(doc, size=15, spacing=1.15, first_line=0, space_after=4)
+    setup_page(doc, size=14, spacing=1.5, first_line=0, space_after=8)
 
-    para(doc, "ТЕЗИСЫ ДЛЯ ВЫСТУПЛЕНИЯ", size=20, bold=True, align="center",
+    para(doc, "ТЕЗИСЫ ДЛЯ ВЫСТУПЛЕНИЯ", size=16, bold=True, align="center",
          indent=0, space_after=6)
-    para(doc, "«" + TITLE + "»", size=15, align="center", indent=0,
+    para(doc, "«" + TITLE + "»", size=14, align="center", indent=0,
          space_after=2, color=MUTED)
     para(doc, STUDENT + " · группа " + GROUP + " · " + PLACE + " · " + YEAR,
-         size=13, align="center", indent=0, space_after=10, color=MUTED)
+         size=12, align="center", indent=0, space_after=12, color=MUTED)
 
     for title, items in THESES:
-        p = para(doc, title, size=17, bold=True, align="left", indent=0,
-                 space_before=14, space_after=6, color=ACCENT)
+        p = para(doc, title, size=14, bold=True, align="left", indent=0,
+                 space_before=18, space_after=8, color=ACCENT)
         for it in items:
-            bullet(doc, it, size=16, space_after=6, spacing=1.15)
+            bullet(doc, it, size=14, space_after=8, spacing=1.5)
 
+    clean_metadata(doc)
     os.makedirs(REPORT_DIR, exist_ok=True)
     out = os.path.join(REPORT_DIR, "theses.docx")
     doc.save(out)

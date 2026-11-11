@@ -3,6 +3,7 @@
 Слайд 1280x720 px (1 px = 9525 EMU), тёплая палитра как в index.html.
 Шрифты: Georgia (заголовки, цитаты), Segoe UI (тело).
 """
+import os
 from pptx import Presentation
 from pptx.util import Emu, Pt
 from pptx.dml.color import RGBColor
@@ -32,6 +33,16 @@ WHITE       = RGBColor(0xFF, 0xFF, 0xFF)
 
 SERIF = "Georgia"
 SANS  = "Segoe UI"
+
+ASSETS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                      "presentation", "slides")
+ADLER_PHOTO = os.path.join(ASSETS, "adler_portrait.jpg")
+JUNG_PHOTO  = os.path.join(ASSETS, "jung_portrait.jpg")
+
+STUDENT = "Сабадаш Павел Андреевич"
+GROUP   = "ИС-24"
+TITLE   = ("Психология школы в подходах Альфреда Адлера "
+           "и Карла Густава Юнга")
 
 
 def px(v):
@@ -75,6 +86,28 @@ def hline(slide, x, y, w, color=LINE, lw=1.0):
 
 def vline(slide, x, y, h, color=LINE, lw=1.0):
     return rect(slide, x, y, max(1.0, lw * 96 / 72), h, fill=color)
+
+
+def pic(slide, path, x, y, w, h, border=None):
+    """Вставить изображение с обрезкой по рамке w×h (имитация object-fit: cover)."""
+    from PIL import Image
+    im = Image.open(path)
+    iw, ih = im.size
+    target = w / h
+    if iw / ih > target:          # шире — обрезаем по бокам
+        new_w = int(ih * target)
+        off = (iw - new_w) // 2
+        im = im.crop((off, 0, off + new_w, ih))
+    else:                          # выше — обрезаем снизу (оставляем верх)
+        new_h = int(iw / target)
+        im = im.crop((0, 0, iw, new_h))
+    tmp = "/tmp/_pic_%s" % os.path.basename(path)
+    im.save(tmp, quality=92)
+    p = slide.shapes.add_picture(tmp, px(x), px(y), px(w), px(h))
+    if border is not None:
+        p.line.color.rgb = border
+        p.line.width = Pt(0.75)
+    return p
 
 
 def tb(slide, x, y, w, h):
@@ -155,14 +188,13 @@ def s01(prs):
     para(t, "и Карла Густава Юнга", 22, INK_SOFT, font=SERIF, italic=True, line=1.4)
 
     vline(s, 747, 218, 250)
-    for i, (letter, col, who, what) in enumerate([
-        ("А", ADLER, "Альфред Адлер", "индивидуальная психология"),
-        ("Ю", JUNG, "Карл Густав Юнг", "аналитическая психология"),
+    for i, (photo, col, who, what) in enumerate([
+        (ADLER_PHOTO, ADLER, "Альфред Адлер", "индивидуальная психология"),
+        (JUNG_PHOTO, JUNG, "Карл Густав Юнг", "аналитическая психология"),
     ]):
-        y = 222 + i * 122
-        t = tb(s, 781, y, 90, 76)
-        para(t, letter, 70, col, font=SERIF, italic=True, line=0.85, first=True)
-        t = tb(s, 866, y + 12, 330, 60)
+        y = 220 + i * 122
+        pic(s, photo, 781, y, 84, 102, border=col)
+        t = tb(s, 886, y + 16, 330, 60)
         para(t, who, 17, INK, bold=True, line=1.2, first=True)
         para(t, what, 13, MUTED, line=1.3, before=3)
 
@@ -253,19 +285,25 @@ def s04(prs):
     head(s, "Глава 1 · Адлер", "Социальный интерес и школьная практика",
          "Gemeinschaftsgefühl — чувство общности", ADLER)
 
-    t = tb(s, PADX, 200, 488, 220)
+    t = tb(s, PADX, 200, 488, 176)
     para(t, "«Критерий психического здоровья — связь с людьми, а не "
-            "превосходство»", 44, INK, font=SERIF, italic=True, line=1.1,
+            "превосходство»", 40, INK, font=SERIF, italic=True, line=1.08,
          first=True)
-    t = tb(s, PADX, 396, 488, 26)
-    para(t, "Альфред Адлер", 19, MUTED, first=True)
-    t = tb(s, PADX, 442, 488, 180)
+    t = tb(s, PADX, 392, 488, 24)
+    para(t, "Альфред Адлер", 17, MUTED, first=True)
+    t = tb(s, PADX, 438, 488, 120)
     rich(t, [("Социальный интерес — ", False, False, None),
              ("врождённая склонность быть частью сообщества", False, True, INK),
              (", сотрудничать и вносить вклад в общее дело. Его нужно "
               "воспитывать, и школа — вторая среда после семьи, где это "
               "происходит.", False, False, None)],
-         16, INK_SOFT, line=1.65, first=True)
+         15, INK_SOFT, line=1.55, first=True)
+    pic(s, ADLER_PHOTO, PADX, 566, 62, 74, border=ADLER)
+    t = tb(s, PADX + 76, 578, 412, 52)
+    para(t, "Альфред Адлер · 1870–1937 · Вена", 13, INK, bold=True,
+         line=1.3, first=True)
+    para(t, "основатель индивидуальной психологии", 12, MUTED, line=1.3,
+         before=2)
 
     vline(s, 624, 200, 400)
     t = tb(s, 656, 200, 544, 22)
@@ -406,12 +444,18 @@ def s07(prs):
     t = tb(s, PADX, 200, 497, 22)
     para(t, "Учитель в детском восприятии", 11, JUNG, bold=True, caps=True,
          spacing=2.4, first=True)
+    pic(s, JUNG_PHOTO, PADX, 232, 74, 92, border=JUNG)
+    t = tb(s, PADX + 88, 246, 400, 60)
+    para(t, "Карл Густав Юнг · 1875–1961", 13, INK, bold=True, line=1.3,
+         first=True)
+    para(t, "основатель аналитической психологии", 12, MUTED, line=1.3,
+         before=2)
     for i, chip in enumerate(["Мудрец", "Мастер"]):
-        x = PADX + i * 96
-        rect(s, x, 230, 88, 28, fill=None, line=JUNG)
-        t = tb(s, x + 12, 236, 64, 18)
+        x = PADX + 88 + i * 96
+        rect(s, x, 300, 88, 28, fill=None, line=JUNG)
+        t = tb(s, x + 12, 306, 64, 18)
         para(t, chip, 13, JUNG, bold=True, first=True)
-    t = tb(s, PADX, 276, 497, 200)
+    t = tb(s, PADX, 356, 497, 200)
     rich(t, [("На учителя проецируются ", False, False, None),
              ("ожидания, надежды и страхи", False, True, INK),
              (" ребёнка. Педагог влияет прежде всего личностью, а не словами.",
@@ -572,9 +616,9 @@ def s10(prs):
         "традиций // КиберЛенинка. URL: cyberleninka.ru/article/n/"
         "arhetipicheskie-smysly-antropologoobrazovatelnyh-traditsiy",
     ]
-    t = tb(s, 735, 228, 465, 360)
+    t = tb(s, 735, 228, 465, 388)
     for i, src in enumerate(srcs):
-        para(t, f"{i + 1}.  {src}", 12.5, INK_SOFT, line=1.45, after=5,
+        para(t, f"{i + 1}.  {src}", 11, INK_SOFT, line=1.38, after=4,
              first=(i == 0))
 
     hline(s, PADX, 624, 1120)
@@ -608,6 +652,14 @@ def main():
     prs = new_deck()
     for fn in (s01, s02, s03, s04, s05, s06, s07, s08, s09, s10):
         fn(prs)
+    cp = prs.core_properties
+    cp.author = STUDENT
+    cp.last_modified_by = STUDENT
+    cp.title = TITLE
+    cp.subject = ""
+    cp.comments = ""
+    cp.category = ""
+    cp.keywords = ""
     out = "presentation/psihologia_shkoly_adler_jung.pptx"
     prs.save(out)
     print("сохранено:", out, "| слайдов:", len(prs.slides.__iter__.__self__._sldIdLst))
