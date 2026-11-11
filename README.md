@@ -18,9 +18,11 @@
 |------|------------|
 | `report/report.docx` | Доклад, 15 страниц, Times New Roman 14 pt, полуторный интервал, поля 2 см, абзацный отступ 1,25 см. Структура: титульный лист, введение, три главы, заключение, список источников. |
 | `report/theses.docx` | Тезисы для выступления, 5 страниц. Только маркированные списки, шрифт 15–17 pt, 5–7 пунктов на слайд, каждый блок привязан к номеру слайда. |
+| `presentation/psihobsh-adler-jung.pptx` | Та же презентация в PowerPoint: 10 слайдов, 16:9, заметки докладчика к каждому слайду. |
 | `presentation/index.html` | Презентация на 10 слайдов (HTML + CSS + JS). Работает офлайн, без CDN и внешних зависимостей. |
 | `sources.md` | Все источники с URL, датой обращения и пометками о доступности. |
 | `tools/build_docs.py` | Генератор `report.docx` и `theses.docx` (python-docx). |
+| `tools/build_pptx.py` | Генератор `presentation/psihobsh-adler-jung.pptx` (python-pptx). |
 
 ---
 
@@ -57,13 +59,40 @@ python3 -m http.server 12000 --directory presentation
 
 ---
 
+## PowerPoint-версия
+
+Файл `presentation/psihobsh-adler-jung.pptx` — та же презентация в формате
+PowerPoint (16:9, 1280 × 720). Он собран скриптом, поэтому правки удобно
+делать в коде и пересобирать одной командой. Дизайн повторяет HTML-версию:
+тёплый фон, Georgia в заголовках, охра у Адлера, сливовый у Юнга, тонкие линии
+вместо карточек.
+
+Что внутри:
+
+- 10 слайдов, та же структура и тот же текст, что в HTML-версии;
+- заметки докладчика к каждому слайду — короткий пересказ на 30–40 секунд;
+- шрифты: Georgia для заголовков, Segoe UI для текста (на macOS PowerPoint
+  подставит системный аналог);
+- редактируется как обычный pptx: объекты — настоящие текстовые блоки, а не
+  картинки.
+
+Сборка:
+
+```bash
+pip install python-pptx
+python3 tools/build_pptx.py       # создаст presentation/psihobsh-adler-jung.pptx
+```
+
+---
+
 ## Как пересобрать документы
 
 Требуется Python 3 и библиотека `python-docx`:
 
 ```bash
-pip install python-docx
+pip install python-docx python-pptx
 python3 tools/build_docs.py      # создаст report/report.docx и report/theses.docx
+python3 tools/build_pptx.py      # создаст presentation/psihobsh-adler-jung.pptx
 ```
 
 Презентация `presentation/index.html` — самостоятельный файл, сборка не нужна:
