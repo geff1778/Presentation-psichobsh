@@ -1,0 +1,22 @@
+# Временные файлы
+.tmp/
+.cache/
+.skills/
+.cache/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Node
+node_modules/
+
+# Сборка и временные документы
+*.pdf
+*.tmp
+~$*
+
+# OS
+.DS_Store
+Thumbs.db
