@@ -17,7 +17,7 @@
 | Файл | Назначение |
 |------|------------|
 | `report/report.docx` | Доклад, 15 страниц, Times New Roman 14 pt, полуторный интервал, поля 2 см, абзацный отступ 1,25 см. Структура: титульный лист, введение, три главы, заключение, список источников. |
-| `report/theses.docx` | Тезисы для выступления, 5 страниц. Только маркированные списки, шрифт 15–17 pt, 5–7 пунктов на слайд, каждый блок привязан к номеру слайда. |
+| `report/theses.docx` | Тезисы для выступления, 5 страниц. Только маркированные списки, шрифт 16–17 pt, 5–7 пунктов на слайд, каждый блок привязан к номеру слайда. |
 | `presentation/index.html` | Презентация на 10 слайдов (HTML + CSS + JS). Работает офлайн, без CDN и внешних зависимостей. |
 | `presentation/psihologia_shkoly_adler_jung.pptx` | Та же презентация в PowerPoint (16:9, 10 слайдов). Весь текст редактируемый. |
 | `sources.md` | Все источники с URL, датой обращения и пометками о доступности. |
@@ -126,24 +126,25 @@ pandoc report.md -o report/report.docx --reference-doc=reference.docx
 
 ## Источники
 
-Все источники электронные, дата обращения — 11.11.2026. Полная версия с
+Все источники электронные, дата обращения — 30.10.2026. Полная версия с
 пометками о доступности — в файле [`sources.md`](sources.md).
 
 1. Леонтьев Д. А. Адлер Альфред // Большая российская энциклопедия.
-   URL: https://old.bigenc.ru/psychology/text/v/1800877
+   URL: https://bigenc.ru/psychology/text/1800877
 2. Леонтьев Д. А. Индивидуальная психология // Большая российская
-   энциклопедия. URL: https://old.bigenc.ru/psychology/text/v/2008679
+   энциклопедия. URL: https://bigenc.ru/psychology/text/2008679
 3. Мавлявиева Л. И. Личностно-социальная концепция воспитания Альфреда
    Адлера : дис. … канд. пед. наук.
-   URL: http://www.dslib.net/obw-pedagogika/lichnostno-socialnaja-koncepcija-vospitanija-alfreda-adlera.html
+   URL: https://www.dissercat.com/content/lichnostno-sotsialnaya-kontseptsiya-vospitaniya-alfreda-adlera
 4. Юнг (Jung) Карл Густав // Психологический словарь.
    URL: https://rus-big-psyho.slovaronline.com/3359-Юнг (Jung) Карл Густав
 5. Хьелл Л., Зиглер Д. Теории личности (фрагмент: Адлер и Юнг).
    URL: https://www.gbs.spb.ru/ru/search/detail/?id=61e0492f12935ed6424cf239c090baf3
 6. Модель К. Юнга и современные стили обучения // КиберЛенинка.
    URL: https://cyberleninka.ru/article/n/model-k-yunga-i-sovremennye-stili-obucheniya
-7. Архетипическая педагогика (обзор) // Alphapedia.
-   URL: https://alphapedia.ru/w/Archetypal_pedagogy
+7. Доценко Т. Э. Архетипические смыслы антропологообразовательных
+   традиций // КиберЛенинка.
+   URL: https://cyberleninka.ru/article/n/arhetipicheskie-smysly-antropologoobrazovatelnyh-traditsiy
 
 ---
 
