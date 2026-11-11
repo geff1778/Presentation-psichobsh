@@ -3,82 +3,683 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Психология школы: Адлер и Юнг — Сабадаш Павел Андреевич, ИС-24</title>
+<title>Психология школы: Адлер и Юнг — Сабадаш П.А.</title>
 <style>
+:root{
+  --bg:#FDFCF8; --ink:#1C1917; --ink-soft:#3F3A36;
+  --muted:#6E6763; --line:#E5E1D8; --line-strong:#D6D0C2;
+  --adler:#B45309; --adler-tint:#FDF0DF;
+  --jung:#4C3575; --jung-tint:#EDE7F5;
+  --serif:Georgia,'PT Serif','Times New Roman',serif;
+  --sans:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+}
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%;background:#EEF2F6;overflow:hidden;
-  font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif}
-#stage{position:absolute;inset:0;display:flex;align-items:center;
-  justify-content:center}
-.slide{position:absolute;width:1280px;height:720px;transform-origin:center;
-  opacity:0;visibility:hidden;transition:opacity .35s ease;
-  border-radius:10px;box-shadow:0 10px 40px rgba(15,23,42,.14);
-  overflow:hidden;background:#fff}
+html,body{height:100%;background:#E4DFD3;overflow:hidden;
+  font-family:var(--sans);color:var(--ink);
+  -webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.slide{
+  position:absolute;width:1280px;height:720px;
+  padding:64px 80px;background:var(--bg);
+  box-shadow:0 20px 60px rgba(28,25,23,.15);
+  opacity:0;visibility:hidden;transform-origin:center;
+  display:flex;flex-direction:column;overflow:hidden;
+}
 .slide.active{opacity:1;visibility:visible}
-.slide svg{display:block;width:1280px;height:720px}
-.slide.active svg{animation:rise .4s ease both}
-@keyframes rise{from{opacity:0;transform:translateY(14px)}
-  to{opacity:1;transform:translateY(0)}}
-#bar{position:fixed;left:0;top:0;height:4px;background:#0D6EFD;width:0;
-  z-index:60;transition:width .3s ease}
-#hud{position:fixed;right:16px;bottom:14px;z-index:60;font-size:14px;
-  color:#334155;background:rgba(255,255,255,.92);border:1px solid #E2E8F0;
-  padding:6px 14px;border-radius:999px;font-variant-numeric:tabular-nums}
-#hud b{color:#0D6EFD}
-#help{position:fixed;left:16px;bottom:14px;z-index:60;font-size:13px;
-  color:#64748B;background:rgba(255,255,255,.9);border:1px solid #E2E8F0;
-  padding:6px 12px;border-radius:999px}
-#help kbd{font-family:inherit;background:#F1F5F9;border:1px solid #E2E8F0;
-  border-radius:5px;padding:1px 5px;font-size:12px;color:#334155}
+#hud{position:fixed;right:18px;bottom:14px;z-index:50;
+  font-size:12px;letter-spacing:1.2px;color:#78716C;
+  background:rgba(253,252,248,.9);padding:4px 10px;border-radius:3px;
+  font-variant-numeric:tabular-nums}
+
+
+/* common */
+.s-label{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;
+  font-weight:600;color:var(--muted);margin-bottom:14px}
+.s-label.adler{color:var(--adler)}
+.s-label.jung{color:var(--jung)}
+.s-title{font-family:var(--serif);font-weight:400;font-size:42px;
+  line-height:1.12;color:var(--ink);letter-spacing:-.3px}
+.s-sub{font-family:var(--serif);font-style:italic;font-size:19px;
+  color:var(--muted);margin-top:6px}
+.s-foot{margin-top:auto;padding-top:20px;border-top:1px solid var(--line);
+  font-size:15px;color:var(--ink-soft);line-height:1.45}
+.s-foot b{color:var(--ink);font-weight:600}
+
+
+/* cover */
+.cover{justify-content:space-between}
+.cover-top{display:flex;justify-content:space-between;align-items:baseline}
+.cover-num{font-family:var(--serif);font-style:italic;font-size:52px;
+  color:var(--muted);line-height:1}
+.cover-label{font-size:12px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--muted);font-weight:600}
+.cover-main{display:grid;grid-template-columns:1.35fr 1fr;gap:56px;
+  align-items:center;margin-top:-4px}
+.cover-title{font-family:var(--serif);font-weight:400;font-size:94px;
+  line-height:.95;letter-spacing:-2px;color:var(--ink)}
+.cover-title em{font-style:italic;color:var(--muted)}
+.cover-sub{font-family:var(--serif);font-style:italic;font-size:22px;
+  line-height:1.4;color:var(--ink-soft);margin-top:22px}
+.cover-side{border-left:1px solid var(--line);padding-left:34px;
+  display:flex;flex-direction:column;gap:32px}
+.cover-name{display:flex;gap:20px;align-items:flex-start}
+.cover-letter{font-family:var(--serif);font-style:italic;font-size:70px;
+  line-height:.85;font-weight:400}
+.cover-letter.a{color:var(--adler)}
+.cover-letter.j{color:var(--jung)}
+.cover-meta{padding-top:6px}
+.cover-who{font-size:17px;font-weight:600;color:var(--ink)}
+.cover-when{font-size:13px;color:var(--muted);margin-top:4px;letter-spacing:.3px}
+.cover-foot{display:flex;justify-content:space-between;align-items:end;
+  padding-top:22px;border-top:1px solid var(--line);
+  font-size:14px;color:var(--muted)}
+.cover-foot .who{color:var(--ink);font-weight:600;letter-spacing:.3px}
+
+
+/* context */
+.ctx-body{display:grid;grid-template-columns:1.35fr 1fr;gap:56px;
+  flex:1;align-items:start;margin-top:24px}
+.ctx-text p{font-size:16px;line-height:1.65;color:var(--ink-soft);
+  margin-bottom:14px}
+.ctx-text em{font-family:var(--serif);font-style:italic;color:var(--ink)}
+.ctx-tl{border-left:1px solid var(--line);padding-left:30px;
+  display:flex;flex-direction:column;gap:22px}
+.ctx-tl-item{display:flex;flex-direction:column;gap:3px}
+.ctx-year{font-family:var(--serif);font-style:italic;font-size:30px;
+  line-height:1;font-weight:400}
+.ctx-year.a{color:var(--adler)}
+.ctx-year.j{color:var(--jung)}
+.ctx-desc{font-size:13px;color:var(--muted);line-height:1.45}
+
+
+/* compensation */
+.comp-flow{display:grid;grid-template-columns:1fr 1fr;gap:44px;
+  margin-top:24px;flex:1;align-items:start}
+.comp-source{grid-column:1/-1;padding:18px 26px;
+  border-left:3px solid var(--adler);background:var(--adler-tint);
+  font-size:16px;line-height:1.5;color:var(--ink)}
+.comp-source b{color:#9A4A06;font-weight:700}
+.comp-path{border-top:2px solid var(--line-strong);padding-top:16px}
+.comp-path.good{border-top-color:var(--adler)}
+.comp-path.bad{border-top-color:var(--jung)}
+.comp-path-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  font-weight:600;color:var(--muted);margin-bottom:6px}
+.comp-path.good .comp-path-label{color:var(--adler)}
+.comp-path.bad .comp-path-label{color:var(--jung)}
+.comp-path-title{font-family:var(--serif);font-size:24px;line-height:1.15;
+  color:var(--ink);margin-bottom:14px}
+.comp-path ul{list-style:none}
+.comp-path li{font-size:15px;line-height:1.5;color:var(--ink-soft);
+  padding:7px 0 7px 18px;position:relative}
+.comp-path li::before{content:"—";position:absolute;left:0;color:var(--muted)}
+.comp-path.good li::before{color:var(--adler)}
+.comp-path.bad li::before{color:var(--jung)}
+
+
+/* social */
+.social-body{display:grid;grid-template-columns:1fr 1.15fr;gap:56px;
+  flex:1;margin-top:26px;align-items:start}
+.social-quote{font-family:var(--serif);font-style:italic;font-size:44px;
+  line-height:1.1;color:var(--ink);letter-spacing:-.5px}
+.social-quote span{display:block;font-size:19px;font-style:normal;
+  color:var(--muted);margin-top:12px;font-family:var(--sans);letter-spacing:.3px}
+.social-def{font-size:16px;line-height:1.65;color:var(--ink-soft);margin-top:28px}
+.social-def em{font-family:var(--serif);font-style:italic;color:var(--ink)}
+.social-practice{border-left:1px solid var(--line);padding-left:32px}
+.social-practice-h{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;
+  font-weight:600;color:var(--adler);margin-bottom:12px}
+.social-item{padding:13px 0;border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:100px 1fr;gap:20px;align-items:baseline}
+.social-item:last-child{border-bottom:none}
+.social-item-year{font-family:var(--serif);font-style:italic;font-size:21px;
+  color:var(--adler);line-height:1}
+.social-item-txt{font-size:15px;line-height:1.55;color:var(--ink-soft)}
+.social-item-txt b{color:var(--ink);font-weight:600}
+
+
+/* archetypes */
+.arch-body{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;
+  flex:1;margin-top:26px;align-items:start}
+.arch-stack{display:flex;flex-direction:column;border:1px solid var(--line)}
+.arch-layer{padding:15px 22px;display:flex;justify-content:space-between;
+  align-items:center;border-bottom:1px solid var(--line)}
+.arch-layer:last-child{border-bottom:none}
+.arch-layer.l1{background:#FAF7EF}
+.arch-layer.l2{background:#EFE7D5}
+.arch-layer.l3{background:var(--jung);color:#fff}
+.arch-layer-name{font-family:var(--serif);font-size:21px;line-height:1.1}
+.arch-layer-desc{font-size:12px;color:var(--muted);letter-spacing:.3px;text-align:right;max-width:200px}
+.arch-layer.l2 .arch-layer-desc{color:#5C564D}
+.arch-layer.l3 .arch-layer-desc{color:rgba(255,255,255,.8)}
+.arch-cap{font-size:13px;color:var(--muted);margin-top:14px;
+  line-height:1.5;font-style:italic;font-family:var(--serif)}
+.arch-chip-h{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;
+  font-weight:600;color:var(--jung);margin-bottom:12px}
+.arch-chips{display:flex;flex-wrap:wrap;gap:8px}
+.arch-chip{padding:7px 14px;border:1px solid var(--line-strong);
+  font-size:14px;color:var(--ink-soft);border-radius:2px}
+.arch-chip.primary{background:var(--jung);color:#fff;border-color:var(--jung);font-weight:600}
+.arch-role{font-size:15px;line-height:1.6;color:var(--ink-soft);margin-top:22px}
+.arch-role em{font-family:var(--serif);font-style:italic;color:var(--ink)}
+
+
+/* types */
+.types-top{display:grid;grid-template-columns:1fr 1fr;gap:56px;
+  margin-top:26px}
+.types-col{border-top:2px solid var(--jung);padding-top:18px}
+.types-name{font-family:var(--serif);font-size:30px;line-height:1;
+  color:var(--ink);margin-bottom:12px}
+.types-name small{font-size:11px;font-family:var(--sans);color:var(--muted);
+  font-style:normal;letter-spacing:1.5px;display:block;margin-bottom:6px;
+  font-weight:700;text-transform:uppercase}
+.types-col p{font-size:15px;line-height:1.55;color:var(--ink-soft)}
+.types-col p b{color:var(--ink);font-weight:600}
+.types-funcs{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.types-funcs-h{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;
+  font-weight:600;color:var(--jung);margin-bottom:14px}
+.types-func-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.types-func{padding:0 20px;border-left:1px solid var(--line)}
+.types-func:first-child{border-left:none;padding-left:0}
+.types-func-name{font-family:var(--serif);font-size:19px;color:var(--ink);
+  line-height:1.1;margin-bottom:4px}
+.types-func-desc{font-size:13px;color:var(--muted);line-height:1.4}
+
+
+/* individuation */
+.ind-body{display:grid;grid-template-columns:1fr 1.15fr;gap:56px;
+  flex:1;margin-top:26px;align-items:start}
+.ind-teacher-h{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;
+  font-weight:600;color:var(--jung);margin-bottom:12px}
+.ind-teacher-title{font-family:var(--serif);font-size:26px;line-height:1.15;
+  color:var(--ink);margin-bottom:14px}
+.ind-roles{display:flex;gap:8px;margin-bottom:14px}
+.ind-role-chip{padding:5px 12px;border:1px solid var(--jung);
+  color:var(--jung);font-size:13px;font-weight:600;border-radius:2px}
+.ind-teacher p{font-size:15px;line-height:1.6;color:var(--ink-soft);margin-bottom:10px}
+.ind-teacher p em{font-family:var(--serif);font-style:italic;color:var(--ink)}
+.ind-side{border-left:1px solid var(--line);padding-left:36px}
+.ind-side-label{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;
+  font-weight:600;color:var(--jung);margin-bottom:12px}
+.ind-side-big{font-family:var(--serif);font-style:italic;font-size:48px;
+  line-height:1.05;color:var(--ink);letter-spacing:-.5px;margin-bottom:18px}
+.ind-points{display:flex;flex-direction:column;gap:12px}
+.ind-point{font-size:15px;line-height:1.5;color:var(--ink-soft);
+  padding-left:20px;position:relative}
+.ind-point::before{content:"";position:absolute;left:0;top:9px;
+  width:10px;height:1px;background:var(--jung)}
+
+
+/* compare */
+.cmp-common{display:flex;gap:22px;align-items:baseline;
+  padding:14px 0;border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);margin-top:22px;margin-bottom:20px;
+  font-size:14px;line-height:1.5;color:var(--ink-soft)}
+.cmp-common-label{font-family:var(--serif);font-style:italic;font-size:19px;
+  color:var(--muted);flex-shrink:0}
+.cmp-table{display:flex;flex-direction:column;flex:1}
+.cmp-row{display:grid;grid-template-columns:.85fr 1.4fr 1.4fr;gap:32px;
+  padding:13px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.cmp-row:last-child{border-bottom:none}
+.cmp-row.cmp-head{padding:0 0 10px 0;border-bottom:1px solid var(--line-strong)}
+.cmp-table .cmp-row.cmp-head > div{font-size:11px;letter-spacing:2.4px;
+  text-transform:uppercase;font-weight:700;color:var(--muted)}
+.cmp-table .cmp-row.cmp-head > div:nth-child(2){color:var(--adler)}
+.cmp-table .cmp-row.cmp-head > div:nth-child(3){color:var(--jung)}
+.cmp-row > div:first-child{font-size:14px;font-weight:600;color:var(--ink)}
+.cmp-row > div:not(:first-child){font-size:15px;line-height:1.45;color:var(--ink-soft)}
+
+
+/* modern */
+.modern-body{display:grid;grid-template-columns:1fr 1fr;gap:56px;
+  flex:1;margin-top:26px}
+.modern-col{border-top:2px solid var(--line-strong);padding-top:18px}
+.modern-col.a{border-top-color:var(--adler)}
+.modern-col.j{border-top-color:var(--jung)}
+.modern-head{font-family:var(--serif);font-size:26px;line-height:1.1;
+  color:var(--ink);margin-bottom:4px}
+.modern-head.a{color:var(--adler)}
+.modern-head.j{color:var(--jung)}
+.modern-sub{font-size:11px;letter-spacing:2.2px;text-transform:uppercase;
+  color:var(--muted);font-weight:600;margin-bottom:14px}
+.modern-list{list-style:none}
+.modern-list li{font-size:15px;line-height:1.55;color:var(--ink-soft);
+  padding:9px 0;border-bottom:1px solid var(--line)}
+.modern-list li:last-child{border-bottom:none}
+.modern-list li::before{content:"→";color:var(--muted);margin-right:10px}
+.modern-col.a .modern-list li::before{color:var(--adler)}
+.modern-col.j .modern-list li::before{color:var(--jung)}
+
+
+/* conclusion */
+.end-body{display:grid;grid-template-columns:1.15fr 1fr;gap:56px;
+  flex:1;margin-top:24px;align-items:start}
+.end-left{display:flex;flex-direction:column;gap:18px}
+.end-quote{font-family:var(--serif);font-size:26px;line-height:1.3;
+  color:var(--ink);letter-spacing:-.3px}
+.end-quote .a{color:var(--adler);font-weight:600}
+.end-quote .j{color:var(--jung);font-weight:600}
+.end-summary{font-size:15px;line-height:1.6;color:var(--ink-soft)}
+.end-summary b{color:var(--ink);font-weight:600}
+.end-sources{border-left:1px solid var(--line);padding-left:32px}
+.end-sources-h{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;
+  font-weight:600;color:var(--muted);margin-bottom:12px}
+.end-sources ol{list-style:none;display:flex;flex-direction:column;
+  gap:7px;counter-reset:src}
+.end-sources li{font-size:12.5px;line-height:1.45;color:var(--ink-soft);
+  padding-left:22px;position:relative;counter-increment:src}
+.end-sources li::before{content:counter(src) ".";position:absolute;left:0;
+  color:var(--muted);font-family:var(--serif);font-style:italic;font-size:14px}
+.end-thanks{margin-top:auto;padding-top:18px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:baseline}
+.end-thanks-main{font-family:var(--serif);font-style:italic;font-size:30px;
+  color:var(--ink)}
+.end-thanks-meta{font-size:13px;color:var(--muted);letter-spacing:.5px}
+
+
+/* print */
 @media print{
   html,body{overflow:visible;background:#fff}
   #stage{position:static;display:block}
-  .slide{position:relative;opacity:1;visibility:visible;transform:none!important;
-    box-shadow:none;border-radius:0;page-break-after:always}
-  #bar,#hud,#help{display:none}
+  .slide{position:relative;opacity:1;visibility:visible;box-shadow:none;
+    transform:none!important;page-break-after:always;border-radius:0}
+  #hud{display:none}
 }
 </style>
 </head>
 <body>
-<div id="bar"></div>
 <div id="stage">
-<div class="slide" data-name="01_cover" aria-label="Титульный"><svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif" lang="ru-RU" role="img" aria-label="Титульный слайд"><rect x="0" y="0" width="1280" height="720" fill="#FFFFFF"/><circle cx="1180" cy="90" r="230" fill="#E7F1FF" opacity="0.55"/><circle cx="120" cy="660" r="200" fill="#E4F3F0" opacity="0.5"/><rect x="0" y="0" width="1280" height="8" fill="#0D6EFD"/><rect x="0" y="8" width="640" height="4" fill="#0F766E"/><text x="72" y="96" font-size="19" fill="#6C757D" font-weight="600" letter-spacing="1.6">Доклад по психологии · тема №8</text><text x="72" y="210" font-size="54" fill="#212529" font-weight="700"><tspan x="72" dy="0">Психология школы</tspan><tspan x="72" dy="70">в подходах Альфреда Адлера</tspan><tspan x="72" dy="70">и Карла Густава Юнга</tspan></text><rect x="76" y="452" width="120" height="6" rx="3" fill="#0D6EFD"/><text x="72" y="508" font-size="24" fill="#6C757D"><tspan x="72" dy="0">Индивидуальная психология А. Адлера и аналитическая психология</tspan><tspan x="72" dy="36">К. Г. Юнга о ребёнке, учителе и обучении</tspan></text><text x="72" y="640" font-size="23" fill="#343A40" font-weight="600">Сабадаш Павел Андреевич</text><text x="72" y="674" font-size="20" fill="#6C757D">Группа ИС-24 · РКСИ · 2026</text></svg></div>
-<div class="slide" data-name="02_why" aria-label="Почему школа стала объектом психологии"><svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif" lang="ru-RU" role="img" aria-label="Почему школа стала объектом психологии"><rect x="0" y="0" width="1280" height="7" fill="#0D6EFD"/><text x="72" y="62" font-size="17" fill="#6C757D" font-weight="600" letter-spacing="1.5">КОНТЕКСТ</text><text x="72" y="118" font-size="40" fill="#212529" font-weight="700">Почему школа стала объектом психологии</text><text x="72" y="162" font-size="21" fill="#6C757D">Начало XX века: массовая школа, детство и бессознательное</text><rect x="77" y="202" width="552" height="396" rx="18" fill="#E9EEF3"/><rect x="72" y="196" width="552" height="396" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/><text x="104" y="252" font-size="25" fill="#212529" font-weight="700">Школа в центре внимания</text><circle cx="109" cy="301" r="5" fill="#0D6EFD"/><text x="130" y="308" font-size="20" fill="#343A40">Массовая школа и обязательное обучение —</text><circle cx="109" cy="339" r="5" fill="#0D6EFD"/><text x="130" y="346" font-size="20" fill="#343A40">огромный поток детей впервые рядом друг с другом.</text><circle cx="109" cy="377" r="5" fill="#0D6EFD"/><text x="130" y="384" font-size="20" fill="#343A40">Школа — первый институт после семьи, где</text><circle cx="109" cy="415" r="5" fill="#0D6EFD"/><text x="130" y="422" font-size="20" fill="#343A40">ребёнок переживает успех и неудачу.</text><circle cx="109" cy="453" r="5" fill="#0D6EFD"/><text x="130" y="460" font-size="20" fill="#343A40">Психоанализ выходит за пределы клиники:</text><circle cx="109" cy="491" r="5" fill="#0D6EFD"/><text x="130" y="498" font-size="20" fill="#343A40">возникает интерес к детству и обучению.</text><rect x="669" y="202" width="544" height="396" rx="18" fill="#E9EEF3"/><rect x="664" y="196" width="544" height="396" rx="18" fill="#F8F9FA" stroke="#E2E8F0" stroke-width="1.5"/><text x="696" y="252" font-size="25" fill="#212529" font-weight="700">Ключевые вехи</text><line x1="738" y1="312" x2="738" y2="548" stroke="#E2E8F0" stroke-width="3"/><circle cx="738" cy="316" r="11" fill="#0D6EFD"/><text x="774" y="314" font-size="21" fill="#0D6EFD" font-weight="700">1900-е</text><text x="774" y="340" font-size="18" fill="#6C757D">Массовая школа в Европе</text><circle cx="738" cy="388" r="11" fill="#0F766E"/><text x="774" y="386" font-size="21" fill="#0F766E" font-weight="700">1911</text><text x="774" y="412" font-size="18" fill="#6C757D">А. Адлер создаёт индивидуальную психологию</text><circle cx="738" cy="460" r="11" fill="#0F766E"/><text x="774" y="458" font-size="21" fill="#0F766E" font-weight="700">1913</text><text x="774" y="484" font-size="18" fill="#6C757D">К. Г. Юнг: аналитическая психология</text><circle cx="738" cy="532" r="11" fill="#0D6EFD"/><text x="774" y="530" font-size="21" fill="#0D6EFD" font-weight="700">1919–20</text><text x="774" y="556" font-size="18" fill="#6C757D">Венские медико-педагогические консультации</text><text x="72" y="656" font-size="21" fill="#343A40" font-weight="600">Вывод: школа становится пространством, где формируется личность ребёнка.</text></svg></div>
-<div class="slide" data-name="03_adler_inferiority" aria-label="Адлер: чувство неполноценности и компенсация"><svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif" lang="ru-RU" role="img" aria-label="Адлер: чувство неполноценности и компенсация"><rect x="0" y="0" width="1280" height="7" fill="#0D6EFD"/><text x="72" y="62" font-size="17" fill="#6C757D" font-weight="600" letter-spacing="1.5">ГЛАВА 1 · АДЛЕР</text><text x="72" y="118" font-size="40" fill="#212529" font-weight="700">Адлер: чувство неполноценности</text><text x="72" y="162" font-size="21" fill="#6C757D">Компенсация как источник развития</text><rect x="77" y="202" width="1136" height="116" rx="18" fill="#E9EEF3"/><rect x="72" y="196" width="1136" height="116" rx="18" fill="#E7F1FF" stroke="#E7F1FF" stroke-width="1.5"/><rect x="72" y="196" width="8" height="116" rx="4" fill="#0D6EFD"/><text x="104" y="238" font-size="23" fill="#212529" font-weight="600"><tspan x="104" dy="0">Чувство неполноценности — нормальное переживание каждого</tspan><tspan x="104" dy="34">ребёнка: он мал, слаб и зависим от взрослых.</tspan></text><text x="104" y="300" font-size="21" fill="#0A58CA" font-weight="600">Это не болезнь, а стимул к развитию.</text><rect x="77" y="350" width="552" height="250" rx="18" fill="#E9EEF3"/><rect x="72" y="344" width="552" height="250" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/><rect x="72" y="344" width="552" height="10" rx="5" fill="#0F766E"/><text x="104" y="400" font-size="23" fill="#0F766E" font-weight="700">Конструктивная компенсация</text><circle cx="109" cy="441" r="5" fill="#0F766E"/><text x="130" y="448" font-size="20" fill="#343A40">преодоление трудности, рост усилий;</text><circle cx="109" cy="483" r="5" fill="#0F766E"/><text x="130" y="490" font-size="20" fill="#343A40">поиск другой области успеха;</text><circle cx="109" cy="525" r="5" fill="#0F766E"/><text x="130" y="532" font-size="20" fill="#343A40">уверенность и вклад в общее дело.</text><rect x="661" y="350" width="552" height="250" rx="18" fill="#E9EEF3"/><rect x="656" y="344" width="552" height="250" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/><rect x="656" y="344" width="552" height="10" rx="5" fill="#B45309"/><text x="688" y="400" font-size="23" fill="#B45309" font-weight="700">Деструктивная компенсация</text><circle cx="693" cy="441" r="5" fill="#B45309"/><text x="714" y="448" font-size="20" fill="#343A40">агрессия, демонстративность, обман;</text><circle cx="693" cy="483" r="5" fill="#B45309"/><text x="714" y="490" font-size="20" fill="#343A40">лень как защита: «способный, просто ленится»;</text><circle cx="693" cy="525" r="5" fill="#B45309"/><text x="714" y="532" font-size="20" fill="#343A40">уход в болезнь, отказ от деятельности.</text><text x="72" y="654" font-size="21" fill="#343A40" font-weight="600">Для учителя: сравнение и унижение толкают ребёнка к деструктивной компенсации.</text></svg></div>
-<div class="slide" data-name="04_adler_social" aria-label="Адлер: социальный интерес и школьная практика"><svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif" lang="ru-RU" role="img" aria-label="Адлер: социальный интерес и школьная практика"><rect x="0" y="0" width="1280" height="7" fill="#0D6EFD"/><text x="72" y="62" font-size="17" fill="#6C757D" font-weight="600" letter-spacing="1.5">ГЛАВА 1 · АДЛЕР</text><text x="72" y="118" font-size="40" fill="#212529" font-weight="700">Адлер: социальный интерес и школа</text><text x="72" y="162" font-size="21" fill="#6C757D">Gemeinschaftsgefühl — чувство общности</text><rect x="77" y="202" width="500" height="396" rx="18" fill="#E9EEF3"/><rect x="72" y="196" width="500" height="396" rx="18" fill="#E7F1FF" stroke="#E7F1FF" stroke-width="1.5"/><text x="104" y="252" font-size="25" fill="#0A58CA" font-weight="700">Социальный интерес</text><text x="104" y="300" font-size="21" fill="#212529"><tspan x="104" dy="0">Врождённая склонность быть частью</tspan><tspan x="104" dy="34">сообщества, сотрудничать и вносить</tspan><tspan x="104" dy="34">вклад в общее дело.</tspan></text><line x1="104" y1="418" x2="540" y2="418" stroke="#0D6EFD" stroke-width="2"/><text x="104" y="458" font-size="20" fill="#6C757D">Критерий психического здоровья:</text><text x="104" y="496" font-size="22" fill="#0A58CA" font-weight="600">связь с людьми, а не превосходство.</text><text x="104" y="552" font-size="20" fill="#6C757D">Задача школы — воспитывать</text><text x="104" y="582" font-size="22" fill="#212529" font-weight="600">сотрудничество, а не соперничество.</text><rect x="617" y="202" width="596" height="396" rx="18" fill="#E9EEF3"/><rect x="612" y="196" width="596" height="396" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/><text x="644" y="252" font-size="25" fill="#212529" font-weight="700">Школьная практика Адлера</text><circle cx="656" cy="300" r="7" fill="#0D6EFD"/><text x="680" y="306" font-size="21" fill="#0A58CA" font-weight="700">1919–1920-е</text><text x="680" y="334" font-size="19" fill="#6C757D"><tspan x="680" dy="0">Венские медико-педагогические консультации:</tspan><tspan x="680" dy="26">учитель + врач + психолог</tspan></text><circle cx="656" cy="400" r="7" fill="#0D6EFD"/><text x="680" y="406" font-size="21" fill="#0A58CA" font-weight="700">Экспериментальная школа</text><text x="680" y="434" font-size="19" fill="#6C757D"><tspan x="680" dy="0">без наказаний, с самоуправлением</tspan><tspan x="680" dy="26">и общими делами</tspan></text><circle cx="656" cy="500" r="7" fill="#0D6EFD"/><text x="680" y="506" font-size="21" fill="#0A58CA" font-weight="700">Сегодня</text><text x="680" y="534" font-size="19" fill="#6C757D"><tspan x="680" dy="0">поддержка вместо наказания;</tspan><tspan x="680" dy="26">«трудное» поведение — сигнал</tspan></text><text x="72" y="654" font-size="21" fill="#343A40" font-weight="600">Адлер: школа должна дать ребёнку переживание нужности и принадлежности.</text></svg></div>
-<div class="slide" data-name="05_jung_unconscious" aria-label="Юнг: коллективное бессознательное и архетипы"><svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif" lang="ru-RU" role="img" aria-label="Юнг: коллективное бессознательное и архетипы"><rect x="0" y="0" width="1280" height="7" fill="#0F766E"/><text x="72" y="62" font-size="17" fill="#6C757D" font-weight="600" letter-spacing="1.5">ГЛАВА 2 · ЮНГ</text><text x="72" y="118" font-size="40" fill="#212529" font-weight="700">Юнг: коллективное бессознательное</text><text x="72" y="162" font-size="21" fill="#6C757D">Архетипы как универсальные первообразы</text><rect x="77" y="202" width="520" height="396" rx="18" fill="#E9EEF3"/><rect x="72" y="196" width="520" height="396" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/><text x="104" y="248" font-size="24" fill="#212529" font-weight="700">Структура психики</text><rect x="104" y="292" width="456" height="78" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/><text x="132" y="341" font-size="21" fill="#212529" font-weight="600">Сознание</text><rect x="104" y="384" width="456" height="78" rx="12" fill="#E4F3F0" stroke="#E4F3F0" stroke-width="1.5"/><text x="132" y="433" font-size="21" fill="#0F766E" font-weight="600">Личное бессознательное</text><rect x="104" y="476" width="456" height="78" rx="12" fill="#0F766E" stroke="#0F766E" stroke-width="1.5"/><text x="132" y="525" font-size="21" fill="#FFFFFF" font-weight="700">Коллективное бессознательное</text><text x="104" y="572" font-size="19" fill="#6C757D">Слой, общий для всех людей,</text><text x="104" y="596" font-size="19" fill="#6C757D">наследуется как структура опыта.</text><rect x="629" y="202" width="584" height="396" rx="18" fill="#E9EEF3"/><rect x="624" y="196" width="584" height="396" rx="18" fill="#F8F9FA" stroke="#E2E8F0" stroke-width="1.5"/><text x="656" y="248" font-size="24" fill="#212529" font-weight="700">Архетипы — «пустые формы»</text><text x="656" y="286" font-size="19" fill="#6C757D">наполняются личным опытом ребёнка</text><rect x="656" y="330" width="78" height="42" rx="21" fill="#E4F3F0"/><text x="674" y="359" font-size="19" fill="#0F766E" font-weight="600">Тень</text><rect x="924" y="330" width="110" height="42" rx="21" fill="#E4F3F0"/><text x="942" y="359" font-size="19" fill="#0F766E" font-weight="600">Персона</text><rect x="656" y="396" width="110" height="42" rx="21" fill="#E4F3F0"/><text x="674" y="425" font-size="19" fill="#0F766E" font-weight="600">Самость</text><rect x="924" y="396" width="99" height="42" rx="21" fill="#E4F3F0"/><text x="942" y="425" font-size="19" fill="#0F766E" font-weight="600">Мудрец</text><rect x="656" y="462" width="163" height="42" rx="21" fill="#E4F3F0"/><text x="674" y="491" font-size="19" fill="#0F766E" font-weight="600">Великая Мать</text><rect x="924" y="462" width="184" height="42" rx="21" fill="#E4F3F0"/><text x="942" y="491" font-size="19" fill="#0F766E" font-weight="600">Анима / Анимус</text><line x1="656" y1="524" x2="1176" y2="524" stroke="#E2E8F0" stroke-width="2"/><text x="656" y="560" font-size="19" fill="#343A40"><tspan x="656" dy="0">Сказка, миф, игра, любимый герой —</tspan><tspan x="656" dy="30">встреча ребёнка с общечеловеческими образами.</tspan></text><text x="72" y="654" font-size="21" fill="#343A40" font-weight="600">Отсюда — ценность творчества и работы с символами в детском возрасте.</text></svg></div>
-<div class="slide" data-name="06_jung_types" aria-label="Юнг: психологические типы и обучение"><svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif" lang="ru-RU" role="img" aria-label="Юнг: психологические типы и обучение"><rect x="0" y="0" width="1280" height="7" fill="#0F766E"/><text x="72" y="62" font-size="17" fill="#6C757D" font-weight="600" letter-spacing="1.5">ГЛАВА 2 · ЮНГ</text><text x="72" y="118" font-size="40" fill="#212529" font-weight="700">Юнг: психологические типы и обучение</text><text x="72" y="162" font-size="21" fill="#6C757D">Экстраверсия и интроверсия · четыре функции</text><rect x="77" y="202" width="552" height="396" rx="18" fill="#E9EEF3"/><rect x="72" y="196" width="552" height="396" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/><text x="104" y="248" font-size="24" fill="#212529" font-weight="700">Две установки</text><rect x="104" y="288" width="163" height="42" rx="21" fill="#E4F3F0"/><text x="122" y="317" font-size="19" fill="#0F766E" font-weight="600">Экстраверсия</text><text x="104" y="372" font-size="20" fill="#343A40"><tspan x="104" dy="0">Энергия направлена вовне.</tspan><tspan x="104" dy="32">Учится через общение, движение,</tspan><tspan x="104" dy="32">обсуждение и совместную работу.</tspan></text><rect x="104" y="470" width="153" height="42" rx="21" fill="#E7F1FF"/><text x="122" y="499" font-size="19" fill="#0A58CA" font-weight="600">Интроверсия</text><text x="104" y="552" font-size="20" fill="#343A40"><tspan x="104" dy="0">Энергия направлена внутрь.</tspan><tspan x="104" dy="32">Учится через размышление и паузу.</tspan></text><rect x="661" y="202" width="552" height="396" rx="18" fill="#E9EEF3"/><rect x="656" y="196" width="552" height="396" rx="18" fill="#F8F9FA" stroke="#E2E8F0" stroke-width="1.5"/><text x="688" y="248" font-size="24" fill="#212529" font-weight="700">Четыре функции</text><circle cx="700" cy="294" r="7" fill="#0D6EFD"/><text x="724" y="300" font-size="21" fill="#212529" font-weight="700">Мышление</text><text x="724" y="328" font-size="19" fill="#6C757D">логика, структура, правила</text><circle cx="700" cy="366" r="7" fill="#0F766E"/><text x="724" y="372" font-size="21" fill="#212529" font-weight="700">Чувство</text><text x="724" y="400" font-size="19" fill="#6C757D">принятие, личное отношение</text><circle cx="700" cy="438" r="7" fill="#0D6EFD"/><text x="724" y="444" font-size="21" fill="#212529" font-weight="700">Ощущение</text><text x="724" y="472" font-size="19" fill="#6C757D">наглядность, практика</text><circle cx="700" cy="510" r="7" fill="#0F766E"/><text x="724" y="516" font-size="21" fill="#212529" font-weight="700">Интуиция</text><text x="724" y="544" font-size="19" fill="#6C757D">смысл, догадка, перспектива</text><text x="72" y="654" font-size="21" fill="#343A40" font-weight="600">Вывод: единый метод обучения не годится для всех — отсюда идея стилей обучения.</text></svg></div>
-<div class="slide" data-name="07_jung_teacher" aria-label="Юнг: учитель как архетип и индивидуация"><svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif" lang="ru-RU" role="img" aria-label="Юнг: учитель как архетип и индивидуация"><rect x="0" y="0" width="1280" height="7" fill="#0F766E"/><text x="72" y="62" font-size="17" fill="#6C757D" font-weight="600" letter-spacing="1.5">ГЛАВА 2 · ЮНГ</text><text x="72" y="118" font-size="40" fill="#212529" font-weight="700">Юнг: учитель как архетип и индивидуация</text><text x="72" y="162" font-size="21" fill="#6C757D">Личность учителя и цель развития ребёнка</text><rect x="77" y="202" width="552" height="396" rx="18" fill="#E9EEF3"/><rect x="72" y="196" width="552" height="396" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/><text x="104" y="248" font-size="24" fill="#212529" font-weight="700">Учитель как архетип</text><rect x="104" y="288" width="99" height="42" rx="21" fill="#E4F3F0"/><text x="122" y="317" font-size="19" fill="#0F766E" font-weight="600">Мудрец</text><text x="240" y="314" font-size="19" fill="#6C757D">— носитель знания</text><rect x="104" y="344" width="99" height="42" rx="21" fill="#E7F1FF"/><text x="122" y="373" font-size="19" fill="#0A58CA" font-weight="600">Мастер</text><text x="240" y="370" font-size="19" fill="#6C757D">— носитель умения</text><line x1="104" y1="416" x2="592" y2="416" stroke="#E2E8F0" stroke-width="2"/><circle cx="109" cy="453" r="5" fill="#0F766E"/><text x="130" y="460" font-size="19" fill="#343A40">на учителя проецируются ожидания и страхи;</text><circle cx="109" cy="493" r="5" fill="#0F766E"/><text x="130" y="500" font-size="19" fill="#343A40">влияет прежде всего личностью, не словами;</text><circle cx="109" cy="533" r="5" fill="#0F766E"/><text x="130" y="540" font-size="19" fill="#343A40">самопознание учителя — часть работы.</text><rect x="661" y="202" width="552" height="396" rx="18" fill="#E9EEF3"/><rect x="656" y="196" width="552" height="396" rx="18" fill="#E4F3F0" stroke="#E4F3F0" stroke-width="1.5"/><text x="688" y="248" font-size="24" fill="#0F766E" font-weight="700">Индивидуация</text><text x="688" y="296" font-size="21" fill="#212529"><tspan x="688" dy="0">Цель развития — стать самим собой</tspan><tspan x="688" dy="34">и обрести внутреннюю целостность.</tspan></text><line x1="688" y1="378" x2="1176" y2="378" stroke="#0F766E" stroke-width="2"/><text x="688" y="416" font-size="20" fill="#343A40">Включает признание Тени —</text><text x="688" y="446" font-size="20" fill="#343A40">своих непризнанных качеств.</text><text x="688" y="512" font-size="20" fill="#6C757D">Цель школы — помочь каждому</text><text x="688" y="542" font-size="20" fill="#6C757D">раскрыть собственную</text><text x="688" y="572" font-size="22" fill="#0F766E" font-weight="700">неповторимость.</text><text x="72" y="654" font-size="21" fill="#343A40" font-weight="600">Юнг: учитель влияет не тем, что говорит, а тем, кем он является.</text></svg></div>
-<div class="slide" data-name="08_compare" aria-label="Общее и различное"><svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif" lang="ru-RU" role="img" aria-label="Общее и различное"><rect x="0" y="0" width="1280" height="7" fill="#0D6EFD"/><text x="72" y="62" font-size="17" fill="#6C757D" font-weight="600" letter-spacing="1.5">ГЛАВА 3 · СРАВНЕНИЕ</text><text x="72" y="118" font-size="40" fill="#212529" font-weight="700">Общее и различное</text><text x="72" y="162" font-size="21" fill="#6C757D">Адлер и Юнг: сопоставление</text><rect x="77" y="190" width="1136" height="104" rx="18" fill="#E9EEF3"/><rect x="72" y="184" width="1136" height="104" rx="18" fill="#E7F1FF" stroke="#E7F1FF" stroke-width="1.5"/><text x="104" y="224" font-size="21" fill="#0A58CA" font-weight="700">Общее:</text><text x="230" y="216" font-size="19" fill="#343A40"><tspan x="230" dy="0">критика авторитарной школы · интерес к бессознательному ·</tspan><tspan x="230" dy="28">связь психологии и педагогики · уважение к ребёнку</tspan></text><rect x="77" y="306" width="1136" height="300" rx="14" fill="#E9EEF3"/><rect x="72" y="300" width="1136" height="300" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/><rect x="72" y="300" width="1136" height="52" rx="14" fill="#F1F5F9"/><rect x="72" y="322" width="1136" height="30" fill="#F1F5F9"/><text x="96" y="334" font-size="19" fill="#6C757D" font-weight="700">Критерий</text><text x="356" y="334" font-size="20" fill="#0A58CA" font-weight="700">АДЛЕР</text><text x="794" y="334" font-size="20" fill="#0F766E" font-weight="700">ЮНГ</text><text x="96" y="384" font-size="19" fill="#343A40" font-weight="600">Движущая сила</text><text x="356" y="384" font-size="19" fill="#343A40">неполноценность и компенсация</text><text x="794" y="384" font-size="19" fill="#343A40">архетипы и индивидуация</text><line x1="92" y1="401" x2="1188" y2="401" stroke="#E2E8F0" stroke-width="1"/><rect x="72" y="401" width="1136" height="49" fill="#F8F9FA"/><text x="96" y="433" font-size="19" fill="#343A40" font-weight="600">Ключевое понятие</text><text x="356" y="433" font-size="19" fill="#343A40">социальный интерес</text><text x="794" y="433" font-size="19" fill="#343A40">коллективное бессознательное</text><line x1="92" y1="450" x2="1188" y2="450" stroke="#E2E8F0" stroke-width="1"/><text x="96" y="482" font-size="19" fill="#343A40" font-weight="600">Критерий здоровья</text><text x="356" y="482" font-size="19" fill="#343A40">сотрудничество, вклад</text><text x="794" y="482" font-size="19" fill="#343A40">целостность, согласие с собой</text><line x1="92" y1="499" x2="1188" y2="499" stroke="#E2E8F0" stroke-width="1"/><rect x="72" y="499" width="1136" height="49" fill="#F8F9FA"/><text x="96" y="531" font-size="19" fill="#343A40" font-weight="600">Роль учителя</text><text x="356" y="531" font-size="19" fill="#343A40">партнёр и помощник</text><text x="794" y="531" font-size="19" fill="#343A40">носитель архетипа, пример</text><line x1="92" y1="548" x2="1188" y2="548" stroke="#E2E8F0" stroke-width="1"/><text x="96" y="580" font-size="19" fill="#343A40" font-weight="600">Цель школы</text><text x="356" y="580" font-size="19" fill="#343A40">стать успешным вместе с другими</text><text x="794" y="580" font-size="19" fill="#343A40">стать самим собой</text><line x1="332" y1="300" x2="332" y2="600" stroke="#E2E8F0" stroke-width="2"/><line x1="770" y1="300" x2="770" y2="600" stroke="#E2E8F0" stroke-width="2"/><text x="72" y="654" font-size="21" fill="#343A40" font-weight="600">Адлер: «стать успешным вместе с другими» · Юнг: «стать самим собой»</text></svg></div>
-<div class="slide" data-name="09_modern_school" aria-label="Значение для современной школы"><svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif" lang="ru-RU" role="img" aria-label="Значение для современной школы"><rect x="0" y="0" width="1280" height="7" fill="#0D6EFD"/><text x="72" y="62" font-size="17" fill="#6C757D" font-weight="600" letter-spacing="1.5">ПРАКТИКА</text><text x="72" y="118" font-size="40" fill="#212529" font-weight="700">Значение для современной школы</text><text x="72" y="162" font-size="21" fill="#6C757D">Что школа берёт у Адлера и у Юнга</text><rect x="77" y="202" width="552" height="396" rx="18" fill="#E9EEF3"/><rect x="72" y="196" width="552" height="396" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/><rect x="72" y="196" width="552" height="10" rx="5" fill="#0D6EFD"/><text x="104" y="254" font-size="25" fill="#0A58CA" font-weight="700">От Адлера</text><circle cx="109" cy="305" r="5" fill="#0D6EFD"/><text x="130" y="312" font-size="20" fill="#343A40">«трудное» поведение — сигнал, а не характер;</text><circle cx="109" cy="361" r="5" fill="#0D6EFD"/><text x="130" y="368" font-size="20" fill="#343A40">поддержка и поощрение вместо наказания;</text><circle cx="109" cy="417" r="5" fill="#0D6EFD"/><text x="130" y="424" font-size="20" fill="#343A40">развитие сотрудничества и самоуправления;</text><circle cx="109" cy="473" r="5" fill="#0D6EFD"/><text x="130" y="480" font-size="20" fill="#343A40">внимание к самооценке и мотивации.</text><rect x="661" y="202" width="552" height="396" rx="18" fill="#E9EEF3"/><rect x="656" y="196" width="552" height="396" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/><rect x="656" y="196" width="552" height="10" rx="5" fill="#0F766E"/><text x="688" y="254" font-size="25" fill="#0F766E" font-weight="700">От Юнга</text><circle cx="693" cy="305" r="5" fill="#0F766E"/><text x="714" y="312" font-size="20" fill="#343A40">учёт индивидуальных стилей обучения;</text><circle cx="693" cy="361" r="5" fill="#0F766E"/><text x="714" y="368" font-size="20" fill="#343A40">ценность творчества, сказки и игры;</text><circle cx="693" cy="417" r="5" fill="#0F766E"/><text x="714" y="424" font-size="20" fill="#343A40">работа с символами и внутренним миром;</text><circle cx="693" cy="473" r="5" fill="#0F766E"/><text x="714" y="480" font-size="20" fill="#343A40">внимание к личности учителя.</text><rect x="77" y="618" width="1136" height="68" rx="18" fill="#E9EEF3"/><rect x="72" y="612" width="1136" height="68" rx="18" fill="#F8F9FA" stroke="#F8F9FA" stroke-width="1.5"/><text x="104" y="656" font-size="21" fill="#212529" font-weight="600">Двойная опора учителя: понимание отношений и понимание внутреннего мира ребёнка.</text></svg></div>
-<div class="slide" data-name="10_conclusion" aria-label="Выводы и источники"><svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif" lang="ru-RU" role="img" aria-label="Выводы и источники"><rect x="0" y="0" width="1280" height="7" fill="#0D6EFD"/><text x="72" y="62" font-size="17" fill="#6C757D" font-weight="600" letter-spacing="1.5">ИТОГИ</text><text x="72" y="118" font-size="40" fill="#212529" font-weight="700">Выводы и источники</text><text x="72" y="162" font-size="21" fill="#6C757D">Итоги доклада</text><rect x="77" y="202" width="660" height="396" rx="18" fill="#E9EEF3"/><rect x="72" y="196" width="660" height="396" rx="18" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/><text x="104" y="250" font-size="25" fill="#212529" font-weight="700">Выводы</text><circle cx="109" cy="299" r="5" fill="#0D6EFD"/><text x="130" y="306" font-size="20" fill="#343A40">Адлер: школа через отношения —</text><circle cx="109" cy="343" r="5" fill="#0D6EFD"/><text x="130" y="350" font-size="20" fill="#343A40">неполноценность, компенсация, социальный интерес.</text><circle cx="109" cy="387" r="5" fill="#0D6EFD"/><text x="130" y="394" font-size="20" fill="#343A40">Юнг: школа через внутренний мир —</text><circle cx="109" cy="431" r="5" fill="#0D6EFD"/><text x="130" y="438" font-size="20" fill="#343A40">архетипы, психологические типы, индивидуация.</text><circle cx="109" cy="475" r="5" fill="#0D6EFD"/><text x="130" y="482" font-size="20" fill="#343A40">Подходы не противоречат, а дополняют друг друга:</text><circle cx="109" cy="519" r="5" fill="#0D6EFD"/><text x="130" y="526" font-size="20" fill="#343A40">успех вместе с другими и верность себе.</text><rect x="761" y="202" width="452" height="396" rx="18" fill="#E9EEF3"/><rect x="756" y="196" width="452" height="396" rx="18" fill="#F8F9FA" stroke="#E2E8F0" stroke-width="1.5"/><text x="788" y="250" font-size="25" fill="#212529" font-weight="700">Источники</text><circle cx="800" cy="300" r="4" fill="#0D6EFD"/><text x="820" y="306" font-size="18" fill="#343A40">1. Д. А. Леонтьев. Адлер Альфред (БРЭ)</text><circle cx="800" cy="338" r="4" fill="#0D6EFD"/><text x="820" y="344" font-size="18" fill="#343A40">2. Леонтьев. Индивидуальная психология</text><circle cx="800" cy="376" r="4" fill="#0D6EFD"/><text x="820" y="382" font-size="18" fill="#343A40">3. Мавлявиева. Дис. о концепции Адлера</text><circle cx="800" cy="414" r="4" fill="#0D6EFD"/><text x="820" y="420" font-size="18" fill="#343A40">4. К. Г. Юнг (Психологический словарь)</text><circle cx="800" cy="452" r="4" fill="#0D6EFD"/><text x="820" y="458" font-size="18" fill="#343A40">5. Л. Хьелл, Д. Зиглер. Теории личности</text><circle cx="800" cy="490" r="4" fill="#0D6EFD"/><text x="820" y="496" font-size="18" fill="#343A40">6. Модель Юнга и стили обучения</text><circle cx="800" cy="528" r="4" fill="#0D6EFD"/><text x="820" y="534" font-size="18" fill="#343A40">7. Архетипическая педагогика</text><text x="72" y="654" font-size="24" fill="#0A58CA" font-weight="700">Спасибо за внимание!</text></svg></div>
+
+
+<!-- 1 · COVER -->
+<div class="slide active" data-idx="1">
+  <div class="cover" style="display:flex;flex-direction:column;height:100%">
+    <div class="cover-top">
+      <div class="cover-label">Психология школы · Тема №8</div>
+      <div class="cover-num">08</div>
+    </div>
+    <div class="cover-main">
+      <div>
+        <div class="cover-title">Психология<br><em>школы</em></div>
+        <div class="cover-sub">в подходах Альфреда Адлера<br>и Карла Густава Юнга</div>
+      </div>
+      <div class="cover-side">
+        <div class="cover-name">
+          <div class="cover-letter a">А</div>
+          <div class="cover-meta">
+            <div class="cover-who">Альфред Адлер</div>
+            <div class="cover-when">индивидуальная психология</div>
+          </div>
+        </div>
+        <div class="cover-name">
+          <div class="cover-letter j">Ю</div>
+          <div class="cover-meta">
+            <div class="cover-who">Карл Густав Юнг</div>
+            <div class="cover-when">аналитическая психология</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cover-foot">
+      <div class="who">Сабадаш Павел Андреевич · группа ИС-24</div>
+      <div>РКСИ · Ростов-на-Дону · 2026</div>
+    </div>
+  </div>
 </div>
-<div id="hud"><b id="cur">1</b> / 10</div>
-<div id="help"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> слайды ·
-  <kbd>F</kbd> полный экран · <kbd>Home</kbd>/<kbd>End</kbd></div>
+
+
+<!-- 2 · CONTEXT -->
+<div class="slide" data-idx="2">
+  <div class="s-label">Контекст</div>
+  <h2 class="s-title">Почему школа стала объектом психологии</h2>
+  <div class="s-sub">Начало XX века: массовая школа, детство и бессознательное</div>
+  <div class="ctx-body">
+    <div class="ctx-text">
+      <p>К началу XX века в Европе складывается <em>массовая обязательная школа</em>. Впервые огромное число детей одновременно оказывается в одном пространстве, подчиняется общим правилам и сравнивается по единой мерке.</p>
+      <p>Школа становится <em>первым институтом после семьи</em>, где ребёнок систематически переживает успех и неудачу, сталкивается с авторитетом и оценкой. Именно здесь формируются его представления о себе и о своём месте среди других.</p>
+      <p>Психоанализ выходит за пределы клиники. Интерес к детству и бессознательным мотивам переносится на педагогику. Адлер и Юнг — оба из круга Фрейда — предлагают свои ответы на вопрос: что происходит с личностью ребёнка в школе.</p>
+    </div>
+    <div class="ctx-tl">
+      <div class="ctx-tl-item">
+        <div class="ctx-year a">1900-е</div>
+        <div class="ctx-desc">Массовая школа в Европе</div>
+      </div>
+      <div class="ctx-tl-item">
+        <div class="ctx-year a">1911</div>
+        <div class="ctx-desc">А. Адлер создаёт индивидуальную психологию</div>
+      </div>
+      <div class="ctx-tl-item">
+        <div class="ctx-year j">1913</div>
+        <div class="ctx-desc">К. Г. Юнг: аналитическая психология</div>
+      </div>
+      <div class="ctx-tl-item">
+        <div class="ctx-year a">1919–20</div>
+        <div class="ctx-desc">Венские медико-педагогические консультации</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 3 · ADLER · INFERIORITY -->
+<div class="slide" data-idx="3">
+  <div class="s-label adler">Глава 1 · Адлер</div>
+  <h2 class="s-title">Чувство неполноценности и компенсация</h2>
+  <div class="s-sub">Как недостаток становится источником развития</div>
+  <div class="comp-flow">
+    <div class="comp-source">
+      <span><b>Чувство неполноценности</b> — нормальное переживание каждого ребёнка: он мал, слаб и зависим от взрослых. Это не болезнь, а стимул к развитию.</span>
+    </div>
+    <div class="comp-path good">
+      <div class="comp-path-label">Конструктивный путь</div>
+      <div class="comp-path-title">Рост и сотрудничество</div>
+      <ul>
+        <li>преодоление трудности, рост усилий</li>
+        <li>поиск другой области успеха</li>
+        <li>уверенность и вклад в общее дело</li>
+      </ul>
+    </div>
+    <div class="comp-path bad">
+      <div class="comp-path-label">Деструктивный путь</div>
+      <div class="comp-path-title">Защита и уход</div>
+      <ul>
+        <li>агрессия, демонстративность, обман</li>
+        <li>лень как защита самооценки</li>
+        <li>уход в болезнь, отказ от деятельности</li>
+      </ul>
+    </div>
+  </div>
+  <div class="s-foot">Для учителя: сравнение и унижение толкают ребёнка к <b>деструктивной компенсации</b>.</div>
+</div>
+
+
+<!-- 4 · ADLER · SOCIAL INTEREST -->
+<div class="slide" data-idx="4">
+  <div class="s-label adler">Глава 1 · Адлер</div>
+  <h2 class="s-title">Социальный интерес и школьная практика</h2>
+  <div class="s-sub">Gemeinschaftsgefühl — чувство общности</div>
+  <div class="social-body">
+    <div>
+      <div class="social-quote">
+        «Критерий психического здоровья — связь с людьми, а не превосходство»
+        <span>Альфред Адлер</span>
+      </div>
+      <div class="social-def">
+        Социальный интерес — <em>врождённая склонность быть частью сообщества</em>, сотрудничать и вносить вклад в общее дело. Его нужно воспитывать, и школа — вторая среда после семьи, где это происходит.
+      </div>
+    </div>
+    <div class="social-practice">
+      <div class="social-practice-h">Венская практика · 1919–1932</div>
+      <div class="social-item">
+        <div class="social-item-year">1919–20</div>
+        <div class="social-item-txt"><b>Медико-педагогические консультации.</b> Учитель, врач и психолог работают вместе с классом.</div>
+      </div>
+      <div class="social-item">
+        <div class="social-item-year">1920-е</div>
+        <div class="social-item-txt"><b>Экспериментальная школа.</b> Без наказаний и соперничества ради отметки: общие дела и детское самоуправление.</div>
+      </div>
+      <div class="social-item">
+        <div class="social-item-year">Сегодня</div>
+        <div class="social-item-txt"><b>Школьная психологическая служба.</b> «Трудное» поведение — сигнал о неудовлетворённой потребности, а не «плохой характер».</div>
+      </div>
+    </div>
+  </div>
+  <div class="s-foot">Задача школы — <b>развивать сотрудничество</b>, а не соперничество и страх оценки.</div>
+</div>
+
+
+<!-- 5 · JUNG · ARCHETYPES -->
+<div class="slide" data-idx="5">
+  <div class="s-label jung">Глава 2 · Юнг</div>
+  <h2 class="s-title">Коллективное бессознательное</h2>
+  <div class="s-sub">Глубинные слои психики и универсальные первообразы</div>
+  <div class="arch-body">
+    <div>
+      <div class="arch-stack">
+        <div class="arch-layer l1">
+          <div class="arch-layer-name">Сознание</div>
+          <div class="arch-layer-desc">опыт «здесь и сейчас»</div>
+        </div>
+        <div class="arch-layer l2">
+          <div class="arch-layer-name">Личное бессознательное</div>
+          <div class="arch-layer-desc">вытесненное и забытое</div>
+        </div>
+        <div class="arch-layer l3">
+          <div class="arch-layer-name">Коллективное бессознательное</div>
+          <div class="arch-layer-desc">общий для всех слой</div>
+        </div>
+      </div>
+      <div class="arch-cap">Наследуется как структура опыта, а не как готовое содержание.</div>
+    </div>
+    <div>
+      <div class="arch-chip-h">Архетипы — «пустые формы»</div>
+      <div class="arch-chips">
+        <span class="arch-chip primary">Самость</span>
+        <span class="arch-chip">Тень</span>
+        <span class="arch-chip">Персона</span>
+        <span class="arch-chip">Анима · Анимус</span>
+        <span class="arch-chip">Мудрец</span>
+        <span class="arch-chip">Великая Мать</span>
+        <span class="arch-chip">Герой</span>
+      </div>
+      <div class="arch-role">Сказка, миф, игра, любимый герой — <em>встреча ребёнка</em> с общечеловеческими образами. Через них он переживает добро и зло, страх и преодоление в безопасной символической форме.</div>
+    </div>
+  </div>
+  <div class="s-foot">Отсюда — <b>ценность творчества и работы с символами</b> в детском возрасте.</div>
+</div>
+
+
+<!-- 6 · JUNG · TYPES -->
+<div class="slide" data-idx="6">
+  <div class="s-label jung">Глава 2 · Юнг</div>
+  <h2 class="s-title">Психологические типы и обучение</h2>
+  <div class="s-sub">Две установки и четыре функции</div>
+  <div class="types-top">
+    <div class="types-col">
+      <div class="types-name"><small>Установка</small>Экстраверсия</div>
+      <p>Энергия направлена <b>вовне</b>. Учится через общение, движение, обсуждение и совместную работу.</p>
+    </div>
+    <div class="types-col">
+      <div class="types-name"><small>Установка</small>Интроверсия</div>
+      <p>Энергия направлена <b>внутрь</b>. Учится через размышление, паузу и спокойную сосредоточенность.</p>
+    </div>
+  </div>
+  <div class="types-funcs">
+    <div class="types-funcs-h">Четыре функции · как ребёнок воспринимает и решает</div>
+    <div class="types-func-row">
+      <div class="types-func">
+        <div class="types-func-name">Мышление</div>
+        <div class="types-func-desc">логика, структура, правила</div>
+      </div>
+      <div class="types-func">
+        <div class="types-func-name">Чувство</div>
+        <div class="types-func-desc">принятие, личное отношение</div>
+      </div>
+      <div class="types-func">
+        <div class="types-func-name">Ощущение</div>
+        <div class="types-func-desc">наглядность, практика</div>
+      </div>
+      <div class="types-func">
+        <div class="types-func-name">Интуиция</div>
+        <div class="types-func-desc">смысл, догадка, перспектива</div>
+      </div>
+    </div>
+  </div>
+  <div class="s-foot">Единый метод обучения не годится для всех — <b>отсюда идея индивидуальных стилей обучения</b>.</div>
+</div>
+
+
+<!-- 7 · JUNG · INDIVIDUATION -->
+<div class="slide" data-idx="7">
+  <div class="s-label jung">Глава 2 · Юнг</div>
+  <h2 class="s-title">Учитель как архетип и индивидуация</h2>
+  <div class="s-sub">Личность педагога и цель развития ребёнка</div>
+  <div class="ind-body">
+    <div class="ind-teacher">
+      <div class="ind-teacher-h">Учитель в детском восприятии</div>
+      <div class="ind-roles">
+        <span class="ind-role-chip">Мудрец</span>
+        <span class="ind-role-chip">Мастер</span>
+      </div>
+      <p>На учителя проецируются <em>ожидания, надежды и страхи</em> ребёнка. Педагог влияет прежде всего личностью, а не словами.</p>
+      <p>Опасность — отождествить себя с идеальным, безошибочным Мудрецом: тогда неудача ребёнка воспринимается как личное оскорбление.</p>
+      <p><em>Самопознание учителя</em> — часть его профессиональной работы.</p>
+    </div>
+    <div class="ind-side">
+      <div class="ind-side-label">Цель развития</div>
+      <div class="ind-side-big">стать<br>самим собой</div>
+      <div class="ind-points">
+        <div class="ind-point">Внутренняя целостность и согласие с собой</div>
+        <div class="ind-point">Признание Тени — своих непризнанных качеств</div>
+        <div class="ind-point">Раскрытие собственной неповторимости</div>
+      </div>
+    </div>
+  </div>
+  <div class="s-foot">Учитель влияет не тем, что говорит, а <b>тем, кем он является</b>.</div>
+</div>
+
+
+<!-- 8 · COMPARE -->
+<div class="slide" data-idx="8">
+  <div class="s-label">Глава 3 · Сравнение</div>
+  <h2 class="s-title">Общее и различное</h2>
+  <div class="cmp-common">
+    <span class="cmp-common-label">Общее</span>
+    <span>критика авторитарной школы · интерес к бессознательному · связь психологии и педагогики · уважение к личности ребёнка</span>
+  </div>
+  <div class="cmp-table">
+    <div class="cmp-row cmp-head">
+      <div>Критерий</div>
+      <div>Адлер</div>
+      <div>Юнг</div>
+    </div>
+    <div class="cmp-row">
+      <div>Движущая сила</div>
+      <div>неполноценность и компенсация</div>
+      <div>архетипы и индивидуация</div>
+    </div>
+    <div class="cmp-row">
+      <div>Ключевое понятие</div>
+      <div>социальный интерес</div>
+      <div>коллективное бессознательное</div>
+    </div>
+    <div class="cmp-row">
+      <div>Критерий здоровья</div>
+      <div>сотрудничество, вклад</div>
+      <div>целостность, согласие с собой</div>
+    </div>
+    <div class="cmp-row">
+      <div>Роль учителя</div>
+      <div>партнёр и помощник</div>
+      <div>носитель архетипа, пример</div>
+    </div>
+    <div class="cmp-row">
+      <div>Цель школы</div>
+      <div>стать успешным вместе с другими</div>
+      <div>стать самим собой</div>
+    </div>
+  </div>
+  <div class="s-foot">Формула: Адлер — «стать успешным вместе с другими» · Юнг — «стать самим собой».</div>
+</div>
+
+
+<!-- 9 · MODERN SCHOOL -->
+<div class="slide" data-idx="9">
+  <div class="s-label">Практика</div>
+  <h2 class="s-title">Значение для современной школы</h2>
+  <div class="s-sub">Что школа берёт у Адлера и у Юнга</div>
+  <div class="modern-body">
+    <div class="modern-col a">
+      <div class="modern-sub">От Адлера</div>
+      <div class="modern-head">Отношения и мотивация</div>
+      <ul class="modern-list">
+        <li>«трудное» поведение — сигнал, а не характер</li>
+        <li>поддержка и поощрение вместо наказания</li>
+        <li>развитие сотрудничества и самоуправления</li>
+        <li>внимание к самооценке и мотивации</li>
+      </ul>
+    </div>
+    <div class="modern-col j">
+      <div class="modern-sub">От Юнга</div>
+      <div class="modern-head">Внутренний мир и тип</div>
+      <ul class="modern-list">
+        <li>учёт индивидуальных стилей обучения</li>
+        <li>ценность творчества, сказки, игры</li>
+        <li>работа с символами и внутренним миром</li>
+        <li>внимание к личности учителя</li>
+      </ul>
+    </div>
+  </div>
+  <div class="s-foot">Двойная опора учителя: <b>понимание отношений</b> и <b>понимание внутреннего мира ребёнка</b>.</div>
+</div>
+
+
+<!-- 10 · CONCLUSION -->
+<div class="slide" data-idx="10">
+  <div class="s-label">Итоги</div>
+  <h2 class="s-title">Выводы и источники</h2>
+  <div class="end-body">
+    <div class="end-left">
+      <div class="end-quote">
+        <span class="a">Адлер:</span> школа через отношения — неполноценность, компенсация, социальный интерес.<br><br>
+        <span class="j">Юнг:</span> школа через внутренний мир — архетипы, типы, индивидуация.
+      </div>
+      <div class="end-summary">
+        Подходы <b>не противоречат, а дополняют</b> друг друга: «стать успешным вместе с другими» и «стать самим собой» — две стороны одной задачи — помочь ребёнку вырасти целостным человеком.
+      </div>
+    </div>
+    <div class="end-sources">
+      <div class="end-sources-h">Источники</div>
+      <ol>
+        <li>Леонтьев Д. А. Адлер Альфред // БРЭ. URL: old.bigenc.ru/psychology/text/v/1800877</li>
+        <li>Леонтьев Д. А. Индивидуальная психология // БРЭ. URL: old.bigenc.ru/psychology/text/v/2008679</li>
+        <li>Мавлявиева Л. И. Личностно-социальная концепция воспитания А. Адлера : дис. … канд. пед. наук. URL: dslib.net/obw-pedagogika/lichnostno-socialnaja-koncepcija-vospitanija-alfreda-adlera.html</li>
+        <li>Юнг (Jung) Карл Густав // Психологический словарь. URL: rus-big-psyho.slovaronline.com/3359-Юнг</li>
+        <li>Хьелл Л., Зиглер Д. Теории личности (фрагмент). URL: gbs.spb.ru/ru/search/detail/?id=61e0492f12935ed6424cf239c090baf3</li>
+        <li>Модель К. Юнга и современные стили обучения // КиберЛенинка. URL: cyberleninka.ru/article/n/model-k-yunga-i-sovremennye-stili-obucheniya</li>
+        <li>Архетипическая педагогика (обзор) // Alphapedia. URL: alphapedia.ru/w/Archetypal_pedagogy</li>
+      </ol>
+    </div>
+  </div>
+  <div class="end-thanks">
+    <div class="end-thanks-main">Спасибо за внимание</div>
+    <div class="end-thanks-meta">Сабадаш П. А. · ИС-24 · 2026</div>
+  </div>
+</div>
+
+
+</div>
+<div id="hud"><span id="cur">1</span> / 10</div>
 <script>
-var idx=0,slides=document.querySelectorAll('.slide'),n=slides.length;
-var bar=document.getElementById('bar'),cur=document.getElementById('cur');
-function fit(){var s=Math.min(innerWidth/1280,innerHeight/720)*0.94;
-  slides.forEach(function(el){el.style.transform='scale('+s+')';});}
-function show(i){idx=Math.max(0,Math.min(n-1,i));
-  slides.forEach(function(el,k){el.classList.toggle('active',k===idx);});
-  bar.style.width=((idx+1)/n*100)+'%';cur.textContent=idx+1;
-  try{history.replaceState(null,'','#'+(idx+1));}catch(e){}}
-addEventListener('resize',fit);
-addEventListener('keydown',function(e){
-  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){
-    show(idx+1);e.preventDefault();}
+var slides = document.querySelectorAll('.slide');
+var idx = 0, n = slides.length;
+
+
+function fit(){
+  var s = Math.min(innerWidth/1280, innerHeight/720) * 0.94;
+  slides.forEach(function(el){ el.style.transform = 'scale(' + s + ')'; });
+}
+function show(i){
+  idx = Math.max(0, Math.min(n-1, i));
+  slides.forEach(function(el,k){ el.classList.toggle('active', k===idx); });
+  document.getElementById('cur').textContent = idx+1;
+  try{ history.replaceState(null,'','#'+(idx+1)); }catch(e){}
+}
+addEventListener('resize', fit);
+addEventListener('keydown', function(e){
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){show(idx+1);e.preventDefault();}
   else if(e.key==='ArrowLeft'||e.key==='PageUp'){show(idx-1);e.preventDefault();}
   else if(e.key==='Home'){show(0);}
   else if(e.key==='End'){show(n-1);}
   else if(e.key==='f'||e.key==='F'){
     if(document.fullscreenElement){document.exitFullscreen();}
-    else{document.documentElement.requestFullscreen();}}});
-document.addEventListener('click',function(e){
-  if(e.target.closest('#hud')||e.target.closest('#help'))return;
-  show(idx+(e.clientX<innerWidth*0.3?-1:1));});
-fit();show((parseInt((location.hash||'#1').slice(1),10)||1)-1);
+    else{document.documentElement.requestFullscreen();}
+  }
+});
+document.addEventListener('click', function(e){
+  show(idx + (e.clientX < innerWidth*0.3 ? -1 : 1));
+});
+fit();
+show((parseInt((location.hash||'#1').slice(1),10)||1)-1);
 </script>
 </body>
 </html>
