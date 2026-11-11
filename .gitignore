@@ -1,0 +1,22 @@
+# Временные файлы агента
+.agent_tmp/
+.agent-cache/
+.agents/
+.openhands/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Node
+node_modules/
+
+# Сборка и временные документы
+*.pdf
+*.tmp
+~$*
+
+# OS
+.DS_Store
+Thumbs.db
